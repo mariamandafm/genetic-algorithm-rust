@@ -3,6 +3,9 @@ name = "genetic_algorithm_rust"
 version = "0.1.0"
 edition = "2024"
 
+[lib]
+path = "src/lib.rs"
+
 [dependencies]
 rand = "0.8.5"
 
