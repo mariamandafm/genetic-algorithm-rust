@@ -17,7 +17,7 @@ fn generate_route(size: usize) -> Route {
         .collect()
 }
 
-pub fn get_coordinates_from_csv(file_path: &str) -> Result<Vec<Point>, Box<dyn Error>> {
+pub fn calculate_best_route(file_path: &str) -> Result<Vec<Point>, Box<dyn Error>> {
     let mut rng = thread_rng();
     let file = File::open(file_path)?;
     let reader = BufReader::new(file);
@@ -33,14 +33,14 @@ pub fn get_coordinates_from_csv(file_path: &str) -> Result<Vec<Point>, Box<dyn E
             group_count += 1;
             println!("{}", group_count);
             // let test_group = generate_route(50_000);
-             let start_process_data = Instant::now();
+            let start_process_data = Instant::now();
             let best_route = genetic_algorithm(&mut rng, &current_group, 10, 10);
-             let duration_process_data = start_process_data.elapsed();
-             println!("Tempo de execução processar dados: {:.2?}", duration_process_data);
+            let duration_process_data = start_process_data.elapsed();
+            println!("Tempo de execução processar dados: {:.2?}", duration_process_data);
 
             let distance = total_distance(&best_route);
             save_distance_to_file(distance, group_count)?;
-            println!("Distância total: {}", total_distance(&current_group));
+            println!("Distância total: {}", total_distance(&best_route));
             current_group.clear();
             continue;
         }
